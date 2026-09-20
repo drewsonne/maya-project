@@ -36,13 +36,13 @@ and writes nothing (run it at session start).
 
 ```mermaid
 flowchart TD
-    SPEC([maya-spec<br/>interviews the Maintainer]) --> P[Product PRD<br/>docs/product]
+    SPEC([maya-spec<br/>interviews the Maintainer<br/>— gate G1]) --> P[Product PRD<br/>docs/product]
     REC([maya-record]) --> R[Research<br/>docs/research]
     REC --> A[ADR<br/>docs/decisions]
     R -->|"finding first, then a<br/>decision that cites it"| A
     P -->|each outcome| E[Epic]
     E --> ST[Story<br/>unbounded backlog]
-    ST -->|story enters the active slice| PLAN([maya-plan<br/>decomposes, justified<br/>by PRD + ADRs])
+    ST -->|"gate G2: Maintainer applies<br/>the authorized label"| PLAN([maya-plan<br/>decomposes, justified<br/>by PRD + ADRs])
     A --> PLAN
     PLAN --> PL[Plan<br/>docs/plan]
     PL -->|"wave in flight + 1 only"| T[Task]
@@ -51,7 +51,8 @@ flowchart TD
     T --> FLEET([maya-fleet<br/>preflight, dispatch one wave,<br/>each agent under<br/>maya-implement rules])
     FLEET --> PR[Draft pull request<br/>on a satellite repo]
     PR --> REV([maya-review<br/>mechanical checks,<br/>then judgement])
-    REV -->|"verdict: merge —<br/>the Maintainer merges,<br/>Closes drewsonne/maya-project#N"| DONE[Task closed<br/>story rolls up<br/>epic rolls up]
+    REV -->|"clean: auto-merge (ADR 0017);<br/>findings: queue for the Maintainer;<br/>Closes drewsonne/maya-project#N"| DONE[Task closed<br/>story rolls up<br/>epic closes at gate G1]
+    DONE -.->|"release PR / deploy —<br/>gate G3, the Maintainer"| SHIP[Shipped<br/>pending story #16 ADR]
     ST -.->|"outgrows one outcome:<br/>relabelled epic in place,<br/>parts become new stories"| E
     REV -.->|"silent decision or fixture<br/>disagreement → maya-record"| REC
     FLEET -.->|"blocked, ambiguous,<br/>or plan proved wrong"| PLAN
@@ -99,14 +100,30 @@ works under between dispatch and PR.
   resolve it, and a planning error is fixed in the plan, not negotiated
   with the implementation.
 
-### The Maintainer
+### The Maintainer and the three guard gates
 
-The Maintainer (ADR 0015) is the only human authority in the loop, at
-exactly three points: they are interviewed for the spec (`maya-spec` never
-invents requirements), they accept ADRs, and they merge — no skill or
-agent ever merges, closes a wave with a PR open, or widens a scope to
-unblock itself. Everything else is delegable to agents precisely because
-those three points are not.
+The pipeline runs autonomously except at three human guard gates
+(ADR 0017), all held by the Maintainer (ADR 0015). A gate sits where a
+mistake is irreversible, externally visible, or a value judgment —
+never where correctness is mechanically checkable.
+
+- **G1 — Decide.** Spec rounds (`maya-spec` never invents requirements),
+  ADR acceptance, epic closure.
+- **G2 — Authorize.** Autonomous work happens only on a story carrying
+  the `authorized` label. The label covers planning and dispatching all
+  of that story's waves, one at a time, until done or blocked; removing
+  it revokes the authorization.
+- **G3 — Ship.** Release-PR merges, deploys and plugin releases are the
+  Maintainer's until the release ADR (story #16) says otherwise.
+
+Between the gates, agents dispatch waves, merge **clean** PRs (verdict
+merge, zero findings, full suite green, scope clean, no fixture edits),
+close stories with demonstration comments, commit wave reports, and
+merge Dependabot PRs when the target's full suite passes. Anything
+weaker queues for the Maintainer with the evidence attached —
+escalation is always to them, never around them. No scheduled or
+background execution: autonomy runs in sessions the Maintainer kicks
+off ("continue authorized work").
 
 ### Measuring the process
 
