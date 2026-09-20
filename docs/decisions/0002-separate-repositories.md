@@ -2,6 +2,7 @@
 
 - Status: accepted
 - Date: 2026-09-13
+- Implementation: none — in force on acceptance
 - Accepted: 2026-09-13
 - Supersedes the earlier monorepo draft of this number
 

@@ -2,6 +2,7 @@
 
 - Status: accepted
 - Date: 2026-09-13
+- Implementation: none — in force on acceptance; structural moves tracked by ADRs 0004–0005
 - Accepted: 2026-09-13, amended in the same pass: layer 2 is named
   `@drewsonne/maya-date-operations` per 0004, not `@drewsonne/maya-calculator`
   as originally drafted

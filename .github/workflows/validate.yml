@@ -36,6 +36,16 @@ jobs:
           done
           exit $fail
 
+      - name: accepted ADRs carry an Implementation line (ADR 0016)
+        run: |
+          fail=0
+          for f in docs/decisions/0*.md; do
+            if grep -q '^- Status: accepted' "$f" && ! grep -q '^- Implementation:' "$f"; then
+              echo "$f: accepted without an Implementation line"; fail=1
+            fi
+          done
+          exit $fail
+
       - name: plugin version bumped when plugin contents change
         run: |
           git rev-parse HEAD^ >/dev/null 2>&1 || { echo "no parent commit; skipping"; exit 0; }

@@ -2,6 +2,7 @@
 
 - Status: accepted
 - Date: 2026-09-13
+- Implementation: epic #10 (stories #11–#14)
 - Accepted: 2026-09-13
 - Depends on: 0002
 

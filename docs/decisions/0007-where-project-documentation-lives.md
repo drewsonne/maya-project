@@ -2,6 +2,7 @@
 
 - Status: superseded by 0010
 - Date: 2026-09-13
+- Implementation: superseded; see ADR 0010
 - Depends on: 0002, 0006
 
 ## Context

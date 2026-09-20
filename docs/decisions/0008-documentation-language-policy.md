@@ -2,6 +2,7 @@
 
 - Status: proposed
 - Date: 2026-09-13
+- Implementation: to be filed at acceptance
 - Depends on: 0006, 0007
 
 ## Context
