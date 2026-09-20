@@ -24,6 +24,7 @@ Never write implementation first.
 - **Never modify anything listed in your package's contract.** Exported signatures, other layers, other packages.
 - **Modify only paths matching your declared scope.** If the change genuinely requires touching something outside it, stop and report; do not widen your own scope.
 - **Dependencies point inward only**: presentation → parsing → operations → representation. Never add an import from a lower layer to a higher one. If you need something from above, the design is wrong — report it.
+- **Touch only contract-listed dependencies** (ADR 0014). Adding, removing or bumping any package dependency — dev or runtime — that your package block's contract does not name is a blocked finding, not a judgement call. Caret ranges in `package.json`, committed lockfile, `npm ci` in CI.
 
 ## Calendar logic in particular
 
