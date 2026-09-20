@@ -23,14 +23,16 @@ Repository facts are re-verified rather than carried forward — see
 
 ## Next
 
-1. Accept or amend the remaining ADRs: 0003, 0004, 0005, 0007, 0008.
+1. Accept or amend the remaining ADRs: 0003, 0004, 0005, 0008 (0007 superseded by 0010).
 2. Create the layer-2 repository (`@drewsonne/maya-date-operations`) — blocks 0004.
 3. Land the three PRs kept after the 2026-09-14 triage (31 closed): parser #30
    (maya-dates ^1.3.0 + barrel exports; Node 24.x check failing), #15 (public parse
    API, no CI ever ran — needs local tests and review, relates to ADR 0003), and #29
    (EBNF grammar, maintenance). One consolidated dependency pass after #30 replaces
    the closed bumps. `maya-calculator` and `maya-dates` are clear.
-4. Start wave 1: issue #1 (`wave-1-schema-ci`) gates all six wave-2 fixture issues.
+4. ~~Start wave 1~~ Done 2026-09-20: `wave-1-schema-ci` merged
+   (maya-date-fixtures#10), task #1 and story #11 closed, epic #10 at 1/4.
+   Next wave of work: the six wave-2 fixture issues (#2–#7, story #12).
 
 ## Open questions
 
