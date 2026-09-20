@@ -30,21 +30,37 @@ Seven kinds of artifact. Four live as files in this repo, three as issues.
 | **Story** | issue, label `story`, sub-issue of an epic | One outcome with acceptance criteria. The backlog — unbounded (ADR 0011). | anyone, any time |
 | **Task** | issue, type `Task`, sub-issue of a story | One work package verbatim: one agent, one branch, one PR. Just-in-time only. | `maya-plan` |
 
+Every skill acts at exactly one place in this flow — skills are the verbs,
+artifacts are the nouns. `maya-orient` is the exception: it reads everything
+and writes nothing (run it at session start).
+
 ```mermaid
 flowchart TD
-    R[Research<br/>docs/research] -->|"finding first, then a<br/>decision that cites it"| A[ADR<br/>docs/decisions]
-    S[maya-spec interview] --> P[Product PRD<br/>docs/product]
+    SPEC([maya-spec<br/>interviews Drew]) --> P[Product PRD<br/>docs/product]
+    REC([maya-record]) --> R[Research<br/>docs/research]
+    REC --> A[ADR<br/>docs/decisions]
+    R -->|"finding first, then a<br/>decision that cites it"| A
     P -->|each outcome| E[Epic]
     E --> ST[Story<br/>unbounded backlog]
-    ST -->|"story enters the active slice:<br/>maya-plan decomposes it,<br/>justified by PRD + ADRs"| PL[Plan<br/>docs/plan]
-    A --> PL
+    ST -->|story enters the active slice| PLAN([maya-plan<br/>decomposes, justified<br/>by PRD + ADRs])
+    A --> PLAN
+    PLAN --> PL[Plan<br/>docs/plan]
     PL -->|"wave in flight + 1 only"| T[Task]
-    T -->|"maya-fleet / maya-implement:<br/>one PR per task"| PR[Pull request<br/>on a satellite repo]
-    PR -->|"Closes drewsonne/maya-project#N<br/>after maya-review + merge"| DONE[Task closed<br/>story rolls up<br/>epic rolls up]
+    R -->|sourced vectors| FIX([maya-fixtures<br/>builds the correctness suite<br/>in maya-date-fixtures])
+    FIX -->|"suite must exist and pass —<br/>gates arithmetic planning<br/>and every dispatch"| FLEET
+    T --> FLEET([maya-fleet<br/>preflight, dispatch one wave,<br/>each agent under<br/>maya-implement rules])
+    FLEET --> PR[Draft pull request<br/>on a satellite repo]
+    PR --> REV([maya-review<br/>mechanical checks,<br/>then judgement])
+    REV -->|"verdict: merge —<br/>Drew merges,<br/>Closes drewsonne/maya-project#N"| DONE[Task closed<br/>story rolls up<br/>epic rolls up]
     ST -.->|"outgrows one outcome:<br/>relabelled epic in place,<br/>parts become new stories"| E
-    PR -.->|"review finds a silent decision<br/>or a fixture disagreement"| R
-    T -.->|"blocked, ambiguous,<br/>or plan proved wrong"| PL
+    REV -.->|"silent decision or fixture<br/>disagreement → maya-record"| REC
+    FLEET -.->|"blocked, ambiguous,<br/>or plan proved wrong"| PLAN
 ```
+
+Rounded nodes are skills; rectangles are artifacts. Not shown:
+`maya-orient` (reads all of it), and `maya-implement`, which is not a step
+but the rulebook every dispatched agent — and every hand-made change —
+works under between dispatch and PR.
 
 ### Movement rules
 
