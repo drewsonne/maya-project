@@ -6,7 +6,9 @@
 
 ## Context
 
-The "Maya Dates" project board (Projects v2, `drewsonne` project 1) is
+The "Maya Dates" project board (Projects v2, `drewsonne` project 2 — a
+dedicated project created at the Maintainer's instruction, distinct from
+the legacy "Refactor" board) is
 where the Maintainer watches work move — it is the pipeline's visible
 state machine, and with autonomy between the guard gates (ADR 0017) it
 is also how a human audits what agents did without reading transcripts.

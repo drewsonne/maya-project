@@ -6,7 +6,7 @@
 set -euo pipefail
 
 OWNER=drewsonne
-PROJECT=1
+PROJECT=2
 REPO=maya-project
 ISSUE="${1:?usage: board-status.sh <issue-number> <status>}"
 STATUS="${2:?usage: board-status.sh <issue-number> <status>}"
