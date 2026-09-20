@@ -140,6 +140,16 @@ via labels, issues and sessions; `maya-orient` reconciles the board
 against reality at every session start. A missing transition is a
 defect.
 
+### Adversarial verification
+
+Five adversarial stages run inside the pipeline (ADR 0020), each
+attacking the artifact its stage produces: plan red-team before issues
+are filed, a bad-faith pass on every PR, a citation audit on attested
+vectors (three-refuter panel for calendar arithmetic), a gap analysis
+at wave collect, and a devil's advocate on every ADR draft. Author ≠
+reviewer is structural — review always reads the diff cold. Findings
+are advisory: they attach and inform, they never block a clean merge.
+
 ### Measuring the process
 
 Every dispatched wave leaves a committed report in `docs/waves/`

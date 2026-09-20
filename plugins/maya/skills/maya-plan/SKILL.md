@@ -72,6 +72,15 @@ promoted in place: relabel the same issue `epic`, keep its number, and write
 its parts as new stories beneath it. Tasks always hang off stories, never
 directly off an epic.
 
+## Red-team before filing (ADR 0020)
+
+Before any issue is created, hand the drafted packages to a fresh
+adversarial agent with one brief: satisfy each package's criteria while
+violating its goal. Every exploit it finds — a criterion met by letter
+not spirit, an ambiguity it could resolve in its own favour, a scope
+gap between packages — is fixed in the criteria before filing. Report
+what the red-team found and what changed.
+
 ## Output
 
 - `docs/plan/<slug>.md` — the waves, packages in full, and the conflict check.

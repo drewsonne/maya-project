@@ -22,6 +22,26 @@ Run all of these before forming any opinion about the code.
 
 Report these as a list with verdicts. If any fails, say which and stop — do not continue into code review to soften the result.
 
+## Adversarial pass (ADR 0020)
+
+Runs alongside judgement, in a **fresh agent that reads the diff cold**
+— never the author, never an agent carrying the author's context.
+
+- **Bad faith.** Assume the diff games its criteria. Check each new
+  test fails without the implementation; look for weakened assertions,
+  letter-not-spirit compliance, and changes hidden in mechanical noise.
+- **Citation audit** (any PR touching attested vectors): re-fetch each
+  claimed source and try to refute the value and the citation. A
+  citation to an unfetchable source is itself a finding.
+- **Tiered intensity**: for calendar arithmetic or attested fixtures,
+  findings survive only a three-refuter majority panel; elsewhere a
+  single adversary suffices.
+
+Adversarial findings are **advisory**: attach them to the PR and the
+queue, but they do not change the verdict or block a clean merge
+(Maintainer's choice, ADR 0020). Never soften or omit one because it
+cannot block.
+
 ## Judgement
 
 Only once the mechanical checks pass.
@@ -39,6 +59,7 @@ Then at most five findings, most serious first, each naming the file and line. D
 
 ## Rules
 
+- **Author ≠ reviewer, always** (ADR 0020): whoever authored the change — agent or session — never runs its review. If you authored it, dispatch a fresh agent to review and relay its verdict.
 - Merge only the clean case, and only under an active G2 authorization (ADR 0017): verdict **merge**, zero findings, full suite green, scope clean, no fixture edits. Everything else: state the verdict and queue it for the Maintainer. Never soften a finding to reach the clean case, and never merge a release PR — shipping is G3, always the Maintainer's.
 - Never approve a PR whose package block cannot be found. Unattributed work has no criteria to check against.
 - Do not comment on formatting, naming preference or style that a linter should own. If a linter should own it and does not, that is one finding: add the linter.
