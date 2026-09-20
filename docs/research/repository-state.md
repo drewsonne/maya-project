@@ -20,7 +20,7 @@ Checked: 2026-09-13
 |---|---|---|---|
 | `maya-dates` | 0 | — | — |
 | `maya-calculator` | 15 | 15 Dependabot | #10, 2020-03-16 |
-| `maya-calculator-parser` | 19 | 10 Dependabot, 8 Copilot, 1 Drew (#15) | #5, 2021-04-01 |
+| `maya-calculator-parser` | 19 | 10 Dependabot, 8 Copilot, 1 Maintainer (#15) | #5, 2021-04-01 |
 
 `maya-dates` carried 19 Dependabot pull requests in earlier counts and now carries none;
 they were resolved on or before 2026-09-13. The mechanical-bump backlog is 25, not 49, and

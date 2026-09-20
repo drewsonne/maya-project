@@ -27,7 +27,7 @@ Report the checks as a pass/fail list. On any failure, name the failed check and
 
 ## Phase 2 — dispatch
 
-This is what the Workflow tool is for: one agent per package, the wave in parallel. Workflow needs Drew's explicit go-ahead each run — confirm it before calling, and never infer it from an earlier run.
+This is what the Workflow tool is for: one agent per package, the wave in parallel. Workflow needs the Maintainer's explicit go-ahead each run — confirm it before calling, and never infer it from an earlier run.
 
 Each agent receives only: its package block, its path scope, the command that runs the fixtures, and the instruction to open a draft pull request and stop.
 
@@ -57,7 +57,7 @@ If more than a third of the wave fails, stop. Do not dispatch the next wave and 
 
 Commit the collect table to `docs/waves/<wave-id>.md` on the hub before calling the wave collected (ADR 0012) — wave id, date, one row per package, review verdicts, findings count. A wave without a report is not complete. Hand-executed waves get the same report.
 
-Drew reviews and merges. Never merge on his behalf, and never mark a wave complete while a pull request is open. After his merges: close a story only when every task beneath it is closed **and** its acceptance is demonstrated against `main`, stating the demonstration in a closing comment (ADR 0013). A story whose criteria cannot be demonstrated stays open — that is a finding for `maya-record`.
+The Maintainer reviews and merges. Never merge on their behalf, and never mark a wave complete while a pull request is open. After their merges: close a story only when every task beneath it is closed **and** its acceptance is demonstrated against `main`, stating the demonstration in a closing comment (ADR 0013). A story whose criteria cannot be demonstrated stays open — that is a finding for `maya-record`.
 
 ## Rules
 

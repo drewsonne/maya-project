@@ -7,7 +7,7 @@ description: Decompose the Maya dates product spec into dependency-ordered work 
 
 A work package is one agent, one branch, one pull request, one non-overlapping file scope. Planning output that cannot be executed in parallel is not a plan, it is a list.
 
-Replaces any general issue-triage approach. Drew already writes well-structured issues with acceptance criteria; the job here is decomposition and conflict avoidance, not issue hygiene.
+Replaces any general issue-triage approach. The Maintainer already writes well-structured issues with acceptance criteria; the job here is decomposition and conflict avoidance, not issue hygiene.
 
 ## Inputs
 

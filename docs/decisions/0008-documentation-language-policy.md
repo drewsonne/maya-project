@@ -54,7 +54,7 @@ Spanish means Latin American Spanish as used in Mexican and Guatemalan scholarsh
 
 **Harder.** Every change to a bilingual document is two changes. The scope above is deliberately narrow because a solo maintainer cannot keep more than this in step, and a stale translation is a liability rather than a partial success. CI should fail a pull request that edits one language of a bilingual pair without the other — the policy is unenforceable by intention alone.
 
-Terminology is a research task on the critical path, not a formatting pass. It cannot be completed by anyone who does not read the literature, which means it is either Drew's work or a question for a collaborator.
+Terminology is a research task on the critical path, not a formatting pass. It cannot be completed by anyone who does not read the literature, which means it is either the Maintainer's work or a question for a collaborator.
 
 **Now has to be true elsewhere.** Six prose pages is the standing translation debt for `maya-dates`, and it grows whenever a new prose page is added — the CI check has to cover `website/i18n/es/` completeness, not only pairs that already exist. A new English page with no Spanish counterpart should fail, or the site will silently serve English pages to a Spanish reader with no indication anything is missing.
 

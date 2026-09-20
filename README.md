@@ -23,7 +23,7 @@ Seven kinds of artifact. Four live as files in this repo, three as issues.
 | artifact | lives in | what it is | written by |
 |---|---|---|---|
 | **Research** | `docs/research/` | A sourced fact about the world — a published date pair, a convention in the literature, a disagreement between authors. Never a choice. | `maya-record` |
-| **ADR** | `docs/decisions/` | A choice that constrains the code, made by Drew. Numbered, never rewritten — superseded by a later ADR. | `maya-record` |
+| **ADR** | `docs/decisions/` | A choice that constrains the code, made by the Maintainer. Numbered, never rewritten — superseded by a later ADR. | `maya-record` |
 | **Product** | `docs/product/` | The PRD: who the product is for and what it must get right. Outcomes, never technologies. | `maya-spec` (interview) |
 | **Plan** | `docs/plan/` | Waves of work packages decomposed from stories — scope, contract, criteria, fixtures per package. | `maya-plan` |
 | **Epic** | issue, label `epic` | A PRD outcome, long-lived. Few. Carries stories, never tasks directly. | `maya-plan` / by hand |
@@ -36,7 +36,7 @@ and writes nothing (run it at session start).
 
 ```mermaid
 flowchart TD
-    SPEC([maya-spec<br/>interviews Drew]) --> P[Product PRD<br/>docs/product]
+    SPEC([maya-spec<br/>interviews the Maintainer]) --> P[Product PRD<br/>docs/product]
     REC([maya-record]) --> R[Research<br/>docs/research]
     REC --> A[ADR<br/>docs/decisions]
     R -->|"finding first, then a<br/>decision that cites it"| A
@@ -51,7 +51,7 @@ flowchart TD
     T --> FLEET([maya-fleet<br/>preflight, dispatch one wave,<br/>each agent under<br/>maya-implement rules])
     FLEET --> PR[Draft pull request<br/>on a satellite repo]
     PR --> REV([maya-review<br/>mechanical checks,<br/>then judgement])
-    REV -->|"verdict: merge —<br/>Drew merges,<br/>Closes drewsonne/maya-project#N"| DONE[Task closed<br/>story rolls up<br/>epic rolls up]
+    REV -->|"verdict: merge —<br/>the Maintainer merges,<br/>Closes drewsonne/maya-project#N"| DONE[Task closed<br/>story rolls up<br/>epic rolls up]
     ST -.->|"outgrows one outcome:<br/>relabelled epic in place,<br/>parts become new stories"| E
     REV -.->|"silent decision or fixture<br/>disagreement → maya-record"| REC
     FLEET -.->|"blocked, ambiguous,<br/>or plan proved wrong"| PLAN
@@ -83,7 +83,7 @@ works under between dispatch and PR.
   Decomposition is cheap to regenerate — a task inventory is a liability.
 - **Task → PR → closed.** One task, one branch, one draft PR on the repo
   that owns the code, closing its task with the full cross-repo form
-  (`Closes drewsonne/maya-project#N`). `maya-review` gates the merge; Drew
+  (`Closes drewsonne/maya-project#N`). `maya-review` gates the merge; the Maintainer
   merges.
 - **Task → PR: interfaces land first.** If package B needs a signature
   package A introduces, A lands it (a stub is enough) in an earlier wave.
@@ -91,7 +91,7 @@ works under between dispatch and PR.
   produce two incompatible ones and both will pass their own tests.
 - **Story → closed.** A story closes only when every task beneath it is
   closed *and* its acceptance is demonstrated against `main`, stated in a
-  closing comment (ADR 0013). An epic closes when Drew restates its PRD
+  closing comment (ADR 0013). An epic closes when the Maintainer restates its PRD
   outcome as achieved.
 - **Anything → Research/ADR (findings loop).** A fixture disagreement, a
   silent decision discovered in review, or a blocked package is a finding.
@@ -99,13 +99,14 @@ works under between dispatch and PR.
   resolve it, and a planning error is fixed in the plan, not negotiated
   with the implementation.
 
-### The human
+### The Maintainer
 
-Drew is the only authority in the loop, at exactly three points: he is
-interviewed for the spec (`maya-spec` never invents requirements), he
-accepts ADRs, and he merges — no skill or agent ever merges, closes a wave
-with a PR open, or widens a scope to unblock itself. Everything else is
-delegable to agents precisely because those three points are not.
+The Maintainer (ADR 0015) is the only human authority in the loop, at
+exactly three points: they are interviewed for the spec (`maya-spec` never
+invents requirements), they accept ADRs, and they merge — no skill or
+agent ever merges, closes a wave with a PR open, or widens a scope to
+unblock itself. Everything else is delegable to agents precisely because
+those three points are not.
 
 ### Measuring the process
 

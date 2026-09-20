@@ -1,7 +1,7 @@
 # Maya date calculator — product requirements
 
 Status: interviewed and written, 2026-09-13 (maya-spec). Every requirement in
-this document was stated or confirmed by Drew in the interview; nothing is
+this document was stated or confirmed by the Maintainer in the interview; nothing is
 inferred from existing code.
 
 ## 1. Who uses this, and for what task?
@@ -81,7 +81,7 @@ switch is testable, not cosmetic.
   prevent; several of these are open issues on `maya-calculator-parser` today.)
 
 **Left open (explicitly undecided, not a non-goal):** astronomy features beyond
-fixture cross-checks (eclipse tables, Venus almanac, event prediction). Drew
+fixture cross-checks (eclipse tables, Venus almanac, event prediction). The Maintainer
 declined to rule these out when asked with full context, so a future request
 here is a product conversation, not an automatic refusal. Astronomy as a
 *verification source* is already in scope via section 3.
@@ -112,7 +112,7 @@ freely so long as product surfaces keep working):
 The app reproduces every citation-backed fixture vector — winal rollover,
 correlation constants, convention switches, the lot — with zero failures.
 
-Observable, binary, and in Drew's control: the fixture suite (this repo's
+Observable, binary, and in the Maintainer's control: the fixture suite (this repo's
 dataset) runs against the app surface, not just the libraries, and passes
 clean. A wrong answer anywhere in the sourced dataset means the product has
 not yet worked, whatever else has shipped.

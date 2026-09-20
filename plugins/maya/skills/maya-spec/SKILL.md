@@ -1,6 +1,6 @@
 ---
 name: maya-spec
-description: Interview Drew into a product spec for the Maya date calculator and write it to docs/product/. Use before planning work, or whenever what the product is for has drifted out of view.
+description: Interview the Maintainer into a product spec for the Maya date calculator and write it to docs/product/. Use before planning work, or whenever what the product is for has drifted out of view.
 ---
 
 # Spec the product
@@ -11,7 +11,7 @@ The failure mode this skill exists to prevent is documented: the app an academic
 
 ## Method
 
-Ask in rounds, one topic per round, and write each answer into the spec before asking the next. Never draft the whole document and ask for corrections — that anchors him on your guesses.
+Ask in rounds, one topic per round, and write each answer into the spec before asking the next. Never draft the whole document and ask for corrections — that anchors them on your guesses.
 
 Rounds, in order:
 
@@ -36,8 +36,8 @@ A `dx-only` item is not condemned. It is simply not product scope, and it does n
 
 ## Rules
 
-- Never write a requirement Drew did not state or confirm. If a gap needs filling, ask.
+- Never write a requirement the Maintainer did not state or confirm. If a gap needs filling, ask.
 - One user job per requirement. A requirement serving two jobs is two requirements.
 - If a round's answer contradicts the existing spec or an ADR, stop and say so. Do not silently reconcile.
-- If he answers a round with an implementation ("use a streaming parser"), record the underlying need and note the implementation as a candidate, not a requirement.
+- If they answer a round with an implementation ("use a streaming parser"), record the underlying need and note the implementation as a candidate, not a requirement.
 - Do not open source files during the interview. What the code does is not evidence of what the product is for.

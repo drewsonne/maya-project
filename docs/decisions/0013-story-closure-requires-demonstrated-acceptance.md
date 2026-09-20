@@ -19,7 +19,7 @@ its acceptance criteria are demonstrated against `main` (or the published
 artifact, once a release stage exists). Whoever closes it states the
 demonstration in a closing comment — what was checked and where. An epic
 closes only when its stories are closed and its PRD outcome is restated
-as achieved in a closing comment by Drew.
+as achieved in a closing comment by the Maintainer.
 
 ## Consequences
 
