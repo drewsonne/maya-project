@@ -1,15 +1,23 @@
 #!/usr/bin/env bash
-# Move a hub issue to a status column on the "Maya Dates" project board.
-# Usage: board-status.sh <issue-number> <Backlog|Ready|"In progress"|"In review"|Done>
-# Resolves all IDs at runtime — nothing board-specific is hardcoded except
-# the owner and project number. Adds the issue to the board if absent.
+# Move a hub issue or any satellite PR to a status column on the
+# "Maya Dates" project board (ADR 0018/0019).
+# Usage: board-status.sh <number> <Backlog|Ready|"In progress"|"In review"|Done> [owner/repo]
+# Third argument defaults to drewsonne/maya-project; pass e.g.
+# drewsonne/maya-date-fixtures to place a satellite PR. Issues and PRs
+# both work. Resolves all IDs at runtime; adds the item if absent.
 set -euo pipefail
 
 OWNER=drewsonne
 PROJECT=2
-REPO=maya-project
-ISSUE="${1:?usage: board-status.sh <issue-number> <status>}"
-STATUS="${2:?usage: board-status.sh <issue-number> <status>}"
+ISSUE="${1:?usage: board-status.sh <number> <status> [owner/repo]}"
+STATUS="${2:?usage: board-status.sh <number> <status> [owner/repo]}"
+FULLREPO="${3:-drewsonne/maya-project}"
+REPO="${FULLREPO#*/}"
+
+URL="https://github.com/$FULLREPO/issues/$ISSUE"
+if gh api "repos/$FULLREPO/issues/$ISSUE" --jq '.pull_request.url' 2>/dev/null | grep -q .; then
+  URL="https://github.com/$FULLREPO/pull/$ISSUE"
+fi
 
 PROJECT_ID=$(gh project view "$PROJECT" --owner "$OWNER" --format json --jq .id)
 FIELD_ID=$(gh project field-list "$PROJECT" --owner "$OWNER" --format json \
@@ -22,10 +30,9 @@ if [ -z "$OPTION_ID" ]; then
 fi
 
 ITEM_ID=$(gh project item-list "$PROJECT" --owner "$OWNER" --limit 500 --format json \
-  --jq ".items[] | select(.content.repository==\"$OWNER/$REPO\" and .content.number==$ISSUE) | .id")
+  --jq ".items[] | select(.content.repository==\"$FULLREPO\" and .content.number==$ISSUE) | .id")
 if [ -z "$ITEM_ID" ]; then
-  ITEM_ID=$(gh project item-add "$PROJECT" --owner "$OWNER" \
-    --url "https://github.com/$OWNER/$REPO/issues/$ISSUE" --format json --jq .id)
+  ITEM_ID=$(gh project item-add "$PROJECT" --owner "$OWNER" --url "$URL" --format json --jq .id)
 fi
 
 gh project item-edit --project-id "$PROJECT_ID" --id "$ITEM_ID" \

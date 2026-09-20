@@ -34,7 +34,16 @@ Identify the hub repo — the one containing `docs/STATE.md`. Check; do not gues
 - Board, if the scope allows: `gh project list --owner drewsonne`, then `gh project item-list <n> --owner drewsonne --format json`
 - Recent activity: `git log --oneline -10` for a local clone, otherwise `gh api repos/drewsonne/<name>/commits --jq '.[0:10] | .[] | .commit.message'`
 
-## 5. Report
+## 5. Reconcile the board (ADR 0019)
+
+Compare the Maya Dates board (drewsonne project 2) against actual issue
+and PR state: closed items not at Done, open PRs missing from the board,
+statuses behind reality. Correct each through `scripts/board-status.sh`
+and report what was corrected. A drift you cannot explain is a finding,
+not a silent fix. The board never commands — reconciliation flows
+reality → board only.
+
+## 6. Report
 
 Under ~250 words, four sections:
 

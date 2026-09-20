@@ -127,14 +127,18 @@ off ("continue authorized work").
 
 ### State management: the board
 
-The "Maya Dates" project board mirrors issue state (ADR 0018) — it is
-how the Maintainer watches autonomous work move without reading
-transcripts. Every issue is on it; transitions are performed by the
-skill or agent that causes the state change, via
-`scripts/board-status.sh <issue> <status>`: **Backlog** (filed) →
-**Ready** (authorized wave, preflight passed) → **In progress**
-(dispatched) → **In review** (draft PR open) → **Done** (closed). A
-missing transition is a defect.
+The "Maya Dates" project board (project 2, linked to this repo) mirrors
+pipeline state (ADRs 0018/0019) — it is how the Maintainer watches
+autonomous work move without reading transcripts. Every hub issue and
+every open satellite PR is on it, with Wave/Size/Kind fields mirrored
+from issue metadata; transitions are performed by the skill or agent
+that causes the state change, via `scripts/board-status.sh <n> <status>
+[owner/repo]`: **Backlog** (filed) → **Ready** (authorized wave,
+preflight passed) → **In progress** (dispatched) → **In review** (draft
+PR open) → **Done** (closed). The board never commands — humans command
+via labels, issues and sessions; `maya-orient` reconciles the board
+against reality at every session start. A missing transition is a
+defect.
 
 ### Measuring the process
 

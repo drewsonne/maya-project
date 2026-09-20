@@ -47,7 +47,7 @@ Put these in every agent prompt, verbatim:
 - Open a draft pull request. Never merge, never push to main.
 - If your acceptance criteria are ambiguous, stop and report the ambiguity. Do not interpret.
 - Reference your task in the PR description with the full cross-repo form (`Closes drewsonne/maya-project#N`). On a satellite repo a bare `Closes #N` closes nothing (ADR 0009).
-- Immediately after opening your draft PR, move your task to In review on the board: run the hub repo's `scripts/board-status.sh <your task number> "In review"` (ADR 0018).
+- Immediately after opening your draft PR, move your task to In review and add the PR itself to the board: run the hub repo's `scripts/board-status.sh <your task number> "In review"` and `scripts/board-status.sh <your PR number> "In review" <owner/repo of your PR>` (ADR 0018/0019).
 
 ## Phase 3 — collect
 
