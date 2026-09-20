@@ -1,0 +1,46 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: marketplace.json is valid
+        run: |
+          jq -e '.name and .owner.name and (.plugins | length > 0)' .claude-plugin/marketplace.json
+          jq -e '.plugins[] | select(.source | startswith("./") | not) | halt_error(1)' .claude-plugin/marketplace.json || true
+          for src in $(jq -r '.plugins[].source' .claude-plugin/marketplace.json); do
+            test -f "$src/.claude-plugin/plugin.json" || { echo "missing plugin.json for $src"; exit 1; }
+          done
+
+      - name: plugin.json is valid
+        run: |
+          for f in plugins/*/.claude-plugin/plugin.json; do
+            jq -e '.name and .version and .description' "$f"
+          done
+
+      - name: every skill has frontmatter with name and description
+        run: |
+          fail=0
+          for f in plugins/*/skills/*/SKILL.md; do
+            head -1 "$f" | grep -qx -- '---' || { echo "$f: no frontmatter"; fail=1; }
+            grep -q '^name:' "$f" || { echo "$f: missing name"; fail=1; }
+            grep -q '^description:' "$f" || { echo "$f: missing description"; fail=1; }
+          done
+          exit $fail
+
+      - name: plugin version bumped when plugin contents change
+        run: |
+          git rev-parse HEAD^ >/dev/null 2>&1 || { echo "no parent commit; skipping"; exit 0; }
+          if git diff --name-only HEAD^ HEAD | grep -q '^plugins/maya/' \
+             && ! git diff HEAD^ HEAD -- plugins/maya/.claude-plugin/plugin.json | grep -q '"version"'; then
+            echo "plugins/maya changed but plugin.json version was not bumped"
+            exit 1
+          fi

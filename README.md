@@ -85,11 +85,37 @@ works under between dispatch and PR.
   that owns the code, closing its task with the full cross-repo form
   (`Closes drewsonne/maya-project#N`). `maya-review` gates the merge; Drew
   merges.
+- **Task → PR: interfaces land first.** If package B needs a signature
+  package A introduces, A lands it (a stub is enough) in an earlier wave.
+  Two agents never negotiate an interface between themselves — they will
+  produce two incompatible ones and both will pass their own tests.
+- **Story → closed.** A story closes only when every task beneath it is
+  closed *and* its acceptance is demonstrated against `main`, stated in a
+  closing comment (ADR 0013). An epic closes when Drew restates its PRD
+  outcome as achieved.
 - **Anything → Research/ADR (findings loop).** A fixture disagreement, a
   silent decision discovered in review, or a blocked package is a finding.
   It flows back through `maya-record` — the fixture is never edited to
   resolve it, and a planning error is fixed in the plan, not negotiated
   with the implementation.
+
+### The human
+
+Drew is the only authority in the loop, at exactly three points: he is
+interviewed for the spec (`maya-spec` never invents requirements), he
+accepts ADRs, and he merges — no skill or agent ever merges, closes a wave
+with a PR open, or widens a scope to unblock itself. Everything else is
+delegable to agents precisely because those three points are not.
+
+### Measuring the process
+
+Every dispatched wave leaves a committed report in `docs/waves/`
+(ADR 0012): packages, fixture results, criteria met, review verdicts,
+findings count. Tuning the pipeline — the task horizon, package sizing,
+skill wording — cites wave reports, not memory. The plugin itself is CI'd:
+`.github/workflows/validate.yml` checks the marketplace and plugin
+manifests, every skill's frontmatter, and that skill changes ship with a
+version bump.
 
 ## Layout
 

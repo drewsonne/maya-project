@@ -55,7 +55,9 @@ For each: run the fixture suite against the branch, check each acceptance criter
 
 If more than a third of the wave fails, stop. Do not dispatch the next wave and do not retry in place; the plan was wrong, so return to `maya-plan`.
 
-Drew reviews and merges. Never merge on his behalf, and never mark a wave complete while a pull request is open.
+Commit the collect table to `docs/waves/<wave-id>.md` on the hub before calling the wave collected (ADR 0012) — wave id, date, one row per package, review verdicts, findings count. A wave without a report is not complete. Hand-executed waves get the same report.
+
+Drew reviews and merges. Never merge on his behalf, and never mark a wave complete while a pull request is open. After his merges: close a story only when every task beneath it is closed **and** its acceptance is demonstrated against `main`, stating the demonstration in a closing comment (ADR 0013). A story whose criteria cannot be demonstrated stays open — that is a finding for `maya-record`.
 
 ## Rules
 
