@@ -25,11 +25,15 @@ Every check must pass.
 
 Report the checks as a pass/fail list. On any failure, name the failed check and the smallest action that clears it, then stop.
 
+On full pass: move the wave's task issues to **Ready** on the board (`scripts/board-status.sh <n> Ready`, ADR 0018).
+
 ## Phase 2 — dispatch
 
 This is what the Workflow tool is for: one agent per package, the wave in parallel. Dispatch requires an active G2 authorization (ADR 0017): the wave's story carries the `authorized` label, applied by the Maintainer. The label covers every wave of that story, sequentially; its absence means stop and ask. Never infer authorization from a different story or an earlier session.
 
 Each agent receives only: its package block, its path scope, the command that runs the fixtures, and the instruction to open a draft pull request and stop.
+
+At dispatch, move each package's task — and the story, with its first task — to **In progress** on the board (ADR 0018).
 
 One wave at a time. Never dispatch the next wave from inside a run.
 
@@ -43,6 +47,7 @@ Put these in every agent prompt, verbatim:
 - Open a draft pull request. Never merge, never push to main.
 - If your acceptance criteria are ambiguous, stop and report the ambiguity. Do not interpret.
 - Reference your task in the PR description with the full cross-repo form (`Closes drewsonne/maya-project#N`). On a satellite repo a bare `Closes #N` closes nothing (ADR 0009).
+- Immediately after opening your draft PR, move your task to In review on the board: run the hub repo's `scripts/board-status.sh <your task number> "In review"` (ADR 0018).
 
 ## Phase 3 — collect
 
@@ -55,7 +60,7 @@ For each: run the fixture suite against the branch, check each acceptance criter
 
 If more than a third of the wave fails, stop. Do not dispatch the next wave and do not retry in place; the plan was wrong, so return to `maya-plan`.
 
-Commit the collect table to `docs/waves/<wave-id>.md` on the hub before calling the wave collected (ADR 0012) — wave id, date, one row per package, review verdicts, findings count. A wave without a report is not complete. Hand-executed waves get the same report.
+Board state is part of collection (ADR 0018): merged-and-closed tasks move to **Done**, a closed story moves to **Done**, and any package still open stays at In review — the wave report notes board state. Then commit the collect table to `docs/waves/<wave-id>.md` on the hub before calling the wave collected (ADR 0012) — wave id, date, one row per package, review verdicts, findings count. A wave without a report is not complete. Hand-executed waves get the same report.
 
 Merging (ADR 0017): a PR whose `maya-review` verdict is **merge** with zero findings, full suite green, scope clean and no fixture edits is merged autonomously under the story's authorization. Any weaker result — findings, an unverifiable criterion, a scope deviation — queues for the Maintainer with the verdict attached; never merge it, and never soften a verdict to make it mergeable. Never mark a wave complete while a pull request is open. Then close a story only when every task beneath it is closed **and** its acceptance is demonstrated against `main`, stating the demonstration in a closing comment (ADR 0013). A story whose criteria cannot be demonstrated stays open — that is a finding for `maya-record`. Ship actions — release-PR merges, deploys, plugin releases — are the Maintainer's (G3), always.
 

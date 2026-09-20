@@ -55,7 +55,7 @@ Every claim carries a source. A citation is author, year, and where in the work 
 ## Workflow
 
 1. Confirm the hub repo and that the target directory exists; create it with a one-line README if not.
-2. If the decision requires implementation work, file its story (under the relevant epic) in the same sitting and put the story number on an `- Implementation:` line after `- Date:`; pure policy gets `- Implementation: none — in force on acceptance` (ADR 0016). Work implementing a decision does not begin until its story and task exist — bootstrap included. CI fails an accepted ADR without the line.
+2. If the decision requires implementation work, file its story (under the relevant epic) in the same sitting and put the story number on an `- Implementation:` line after `- Date:`; pure policy gets `- Implementation: none — in force on acceptance` (ADR 0016). Work implementing a decision does not begin until its story and task exist — bootstrap included. CI fails an accepted ADR without the line. Filed issues land on the board at Backlog (`scripts/board-status.sh <n> Backlog`, ADR 0018).
 3. Draft the file and show it to the Maintainer before committing.
 4. Commit as `docs: <title>`. Reference the issue or PR that prompted it in the commit body.
 5. If this supersedes an earlier decision, edit that file's Status to `superseded by NNNN` in the same commit.

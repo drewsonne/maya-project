@@ -76,7 +76,7 @@ directly off an epic.
 
 - `docs/plan/<slug>.md` — the waves, packages in full, and the conflict check.
 - One GitHub issue per package **on the hub repo**, type Task, created as a sub-issue of its story (ADR 0009), body containing the package block verbatim, labelled `wave-N`, `layer-N` and its size.
-- Added to the project board if `gh auth status` shows the `project` scope; if not, create the issues anyway and say to run `gh auth refresh -s project`.
+- Every issue created lands on the "Maya Dates" board at **Backlog** via `scripts/board-status.sh <n> Backlog` (ADR 0018) — this is part of creating the issue, not a follow-up. Requires the `project` scope; if absent, create the issues anyway and say to run `gh auth refresh -s project`.
 
 ## Rules
 

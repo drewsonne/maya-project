@@ -125,6 +125,17 @@ escalation is always to them, never around them. No scheduled or
 background execution: autonomy runs in sessions the Maintainer kicks
 off ("continue authorized work").
 
+### State management: the board
+
+The "Maya Dates" project board mirrors issue state (ADR 0018) — it is
+how the Maintainer watches autonomous work move without reading
+transcripts. Every issue is on it; transitions are performed by the
+skill or agent that causes the state change, via
+`scripts/board-status.sh <issue> <status>`: **Backlog** (filed) →
+**Ready** (authorized wave, preflight passed) → **In progress**
+(dispatched) → **In review** (draft PR open) → **Done** (closed). A
+missing transition is a defect.
+
 ### Measuring the process
 
 Every dispatched wave leaves a committed report in `docs/waves/`
