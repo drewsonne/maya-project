@@ -65,6 +65,13 @@ before dispatch; a stale package is re-planned, not dispatched.
 If a package's story or epic does not exist yet, create it first and attach
 the task beneath it. A task without a story is not ready to file.
 
+Stories are the backlog and are unbounded (ADR 0011): capture future work as
+a story at any time, without waiting for a wave — only tasks are held to the
+horizon. A story that needs breaking into more than one coherent outcome is
+promoted in place: relabel the same issue `epic`, keep its number, and write
+its parts as new stories beneath it. Tasks always hang off stories, never
+directly off an epic.
+
 ## Output
 
 - `docs/plan/<slug>.md` — the waves, packages in full, and the conflict check.

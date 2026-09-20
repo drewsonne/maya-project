@@ -7,6 +7,9 @@ sub-issue hierarchy — epic (label `epic`) → story (label `story`) → task
 (type Task, a maya-plan package block). Tasks are created just-in-time, at
 most the wave in flight plus one planned ahead; satellite-repo PRs close hub
 tasks with the full cross-repo form (`Closes drewsonne/maya-project#N`).
+Stories are the unbounded backlog (ADR 0011) — capture future work freely;
+a story that needs breaking down is relabelled `epic` in place, its parts
+becoming new stories beneath it.
 
 Each is a directory containing a `SKILL.md`. Committing this tree to the repo root is all the installation needed — Claude Code discovers `.claude/skills/*/SKILL.md` automatically when run with this repo as the working directory.
 
