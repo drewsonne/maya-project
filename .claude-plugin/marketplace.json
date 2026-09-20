@@ -1,0 +1,13 @@
+{
+  "name": "maya-project",
+  "owner": {
+    "name": "Drew Sonne"
+  },
+  "plugins": [
+    {
+      "name": "maya",
+      "description": "The Maya dates project pipeline: orient, spec, record, fixtures, plan, fleet, implement, review",
+      "source": "./plugins/maya"
+    }
+  ]
+}
