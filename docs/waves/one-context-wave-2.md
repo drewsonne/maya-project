@@ -2,7 +2,7 @@
 
 - Plan: `docs/plan/2026-09-26-one-context-per-unit.md` (ADR 0021, story #43)
 - Date dispatched: 2026-09-26, one agent, fresh context, own worktree
-- Date collected: 2026-09-26 — **queued for Maintainer merge**
+- Date collected: 2026-09-26 — **complete**; #53 merged as edbc69a, plugin 1.10.0 on `main`
 - Preflight: main green (8d76119, plugin 1.9.5); fixture command exit 0;
   no open PRs; all four wave-1 dependencies merged; task #48 sub-issue of
   open story #43
@@ -37,7 +37,7 @@ proposed ADR as settled — fixed). None blocking after the changes.
 
 ## Story closure
 
-On merge of #53 (plugin 1.10.0), story #43's acceptance is demonstrated
+Story #43 closed 2026-09-26 with a demonstration comment: acceptance demonstrated
 against `main`: the four skill criteria (implement, plan, fleet+review,
 orient/spec/record) landed in 8d76119 and 6b34e98, the README and
 release in #53; validate workflow green. The closing comment on #43
