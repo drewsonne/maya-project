@@ -7,6 +7,8 @@ description: Gate, dispatch and collect a wave of parallel agents against a maya
 
 Three phases: preflight, dispatch, collect. Preflight is not advisory — if it fails, report which check failed and stop. Do not offer to proceed anyway.
 
+The fleet context does one wave — preflight, dispatch, collect, report — then ends, and never plans or implements: a coordinator consumes tables and reports and never does a package itself (ADR 0021).
+
 The reason the gate is strict: eleven agent-authored pull requests once sat unmerged on this project for eight months. Agent capacity was never the constraint. Review throughput is. A wave is only worth dispatching if its output can be trusted without reading every line, and that is what the fixture suite buys.
 
 ## Phase 1 — preflight
@@ -31,7 +33,9 @@ On full pass: move the wave's task issues to **Ready** on the board (`scripts/bo
 
 This is what the Workflow tool is for: one agent per package, the wave in parallel. Dispatch requires an active G2 authorization (ADR 0017): the wave's story carries the `authorized` label, applied by the Maintainer. The label covers every wave of that story, sequentially; its absence means stop and ask. Never infer authorization from a different story or an earlier session.
 
-Each agent receives only: its package block, its path scope, the command that runs the fixtures, and the instruction to open a draft pull request and stop.
+Each agent receives only its package block, the maya-implement skill text, its path scope, the command that runs the fixtures, and the instruction to open a draft pull request and stop.
+
+Assemble every agent prompt in this order, without exception: the hard rules below first, the maya-implement skill text next, the package block last. The package block goes last because the acceptance criteria are then the most recent thing in the agent's context when it starts work, and the most recent thing in context is what an agent actually follows.
 
 At dispatch, move each package's task — and the story, with its first task — to **In progress** on the board (ADR 0018).
 
@@ -53,10 +57,14 @@ Put these in every agent prompt, verbatim:
 
 One table, not one report per package:
 
-| package | PR | fixtures | criteria met | notes |
-|---|---|---|---|---|
+| package | PR | outcome | fixtures | criteria met | notes |
+|---|---|---|---|---|---|
 
-For each: run the fixture suite against the branch, check each acceptance criterion, and diff the changed paths against the declared scope. Flag any package that touched a fixture file — treat it as failed regardless of whether tests pass.
+`outcome` is one of `ok | blocked | failed`: `ok` when the review agent reports fixtures green, scope clean and every criterion met; `blocked` when the agent stopped with a stop report; `failed` for anything else.
+
+For each PR, the collecting context dispatches one fresh review agent running `maya-review` — one pull request per reviewing context, never an agent that has already reviewed another PR in the wave and never the author (ADR 0020, 0021). The review agent runs the fixture suite against the branch, checks each acceptance criterion by name, and diffs the changed paths against the declared scope; it flags any package that touched a fixture file, and that package is `failed` regardless of whether tests pass. The collecting context consumes the review agent's verdict, findings and per-criterion results, and never reads a diff or runs the suite itself.
+
+An agent that stopped with a stop report gets outcome `blocked`, its stop report recorded verbatim under `notes`, and is not retried in place: the question it raised goes back to planning or to `maya-record`, not to a second agent in the same run.
 
 If more than a third of the wave fails, stop. Do not dispatch the next wave and do not retry in place; the plan was wrong, so return to `maya-plan`.
 
