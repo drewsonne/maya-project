@@ -2,7 +2,7 @@
 
 - Plan: `docs/plan/2026-09-26-one-context-per-unit.md` (ADR 0021, story #43)
 - Date dispatched: 2026-09-26, four agents in parallel, one worktree each
-- Date collected: 2026-09-26 — **queued for Maintainer merge, not complete**
+- Date collected: 2026-09-26 — **complete**; all four packages on `main` at plugin 1.9.5
 - Preflight: all nine checks passed (main green at 46fcb59; fixture
   command exit 0; no open PRs; tasks #44–#47 sub-issues of open story #43)
 
@@ -57,7 +57,17 @@ wave for the Maintainer; nothing was auto-merged.
   with ADR 0017 for non-clean PRs; a clean PR would have hit the same
   wall. Worth deciding whether auto-merge is ever expected to work here.
 
-## Merge order (versions must land in sequence)
+## How it merged
+
+The Maintainer squash-merged #52, then #51. Because the three remaining
+branches had been stacked (#51 on #50 on #49) to keep the version line
+conflict-free under merge commits, the #51 squash (8d76119) carried #49
+and #50 onto `main` as well, closing #45–#47 from its body. #49 and #50
+were closed as superseded with an empty content diff against `main`.
+Lesson: stacking only works with merge commits; under squash the top of
+the stack is the whole wave. State the merge method in the plan.
+
+## Merge order as planned
 
 1. #52 → 1.9.2
 2. #49 → 1.9.3 (resolve `plugin.json` to 1.9.3 if updating the branch)
@@ -68,7 +78,6 @@ Then wave 2 (#48: README and 1.10.0) dispatches from a fresh context.
 
 ## Board state
 
-Tasks #44–#47 and story #43 at In progress (moved at dispatch). Moves to
-In review for the tasks and PRs were attempted and blocked by the rate
-limit; re-run after reset:
-`for n in 44 45 46 47 49 50 51 52; do bash scripts/board-status.sh $n "In review"; done`.
+Tasks #44–#47 closed; story #43 stays open for wave 2. Board moves
+(tasks and PRs #49–#52 to Done) deferred to the GraphQL reset; the
+coordinator runs them.
