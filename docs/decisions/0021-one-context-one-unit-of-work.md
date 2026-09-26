@@ -1,6 +1,6 @@
 # 0021. One context does one unit of work, and every handoff is self-sufficient
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-26
 - Implementation: #43
 - Depends on: 0009, 0020

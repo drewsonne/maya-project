@@ -50,7 +50,7 @@ The lower loop is the wave. `maya-fleet` dispatches one agent per package, each 
 
 ## One context, one unit of work
 
-Every context does one unit of work, then ends (ADR 0021, proposed): one package per implementing agent, ending at its draft pull request or stop report; one pull request per reviewing agent; one spec round, ADR, plan, wave or orientation per session. The context that plans never dispatches, the one that dispatches never implements, and a coordinator consumes tables and reports rather than doing a package itself. Every handoff is a written artifact sufficient on its own: a package block quoting its story, PRD outcome and binding ADR clauses; a fixed-shape stop report; a PR description carrying its acceptance criteria as a checklist from the first commit. The evidence behind the rule is collected in [`SOURCES.md`](SOURCES.md).
+Every context does one unit of work, then ends (ADR 0021): one package per implementing agent, ending at its draft pull request or stop report; one pull request per reviewing agent; one spec round, ADR, plan, wave or orientation per session. The context that plans never dispatches, the one that dispatches never implements, and a coordinator consumes tables and reports rather than doing a package itself. Every handoff is a written artifact sufficient on its own: a package block quoting its story, PRD outcome and binding ADR clauses; a fixed-shape stop report; a PR description carrying its acceptance criteria as a checklist from the first commit. The evidence behind the rule is collected in [`SOURCES.md`](SOURCES.md).
 
 ## Invoking them
 

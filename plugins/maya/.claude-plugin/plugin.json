@@ -2,7 +2,7 @@
   "name": "maya",
   "displayName": "Maya Dates Project Skills",
   "description": "Eight skills that run the Maya dates project: orient, spec, record, fixtures, plan, fleet, implement, review",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "author": {
     "name": "Drew Sonne"
   }
