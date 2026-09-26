@@ -11,15 +11,19 @@ Replaces any general issue-triage approach. The Maintainer already writes well-s
 
 ## Inputs
 
-Read before planning: `docs/product/prd.md`, `docs/decisions/` (every accepted ADR), `docs/plan/` (existing waves), and the open issues on the target repo. Plan only what the spec or an ADR justifies.
+Read before planning: `docs/product/prd.md`; `docs/decisions/` — the ADRs whose `Binds:` line names the level, layer or skill the story touches, not every accepted ADR (until an ADR carries a `Binds:` line, the default set is 0001, 0009, 0011, 0014, 0017, 0018, 0020 and 0021 plus any ADR whose title names the layer or repository the story touches); `docs/plan/` (existing waves); and the open issues on the target repo. Plan only what the spec or an ADR justifies.
 
 ## Package shape
 
-Every package carries all of these. A package missing any field is not ready to dispatch.
+Every package carries all of these. A package missing any field is not ready to dispatch. In particular, a package missing `story:`, `outcome:` or `binds:` is not ready to dispatch: those three are what make the block sufficient on its own (ADR 0021), and an agent that must climb the tree to learn why it is working is an agent that will guess.
 
 ```
 id:           wave-N-short-slug
 goal:         one sentence, an outcome
+story:        hub issue number of the story this package serves (#N)
+outcome:      the PRD section it serves and one sentence saying how
+binds:        - ADR NNNN "the clause, quoted"
+              - up to three clauses, each an ADR number plus the quoted clause
 layer:        1 representation | 2 operations | 3 parsing | 4 presentation
 scope:        explicit path globs the agent may modify
 contract:     what it must NOT change (exported signatures, fixture files, other layers)
@@ -78,8 +82,15 @@ Before any issue is created, hand the drafted packages to a fresh
 adversarial agent with one brief: satisfy each package's criteria while
 violating its goal. Every exploit it finds — a criterion met by letter
 not spirit, an ambiguity it could resolve in its own favour, a scope
-gap between packages — is fixed in the criteria before filing. Report
-what the red-team found and what changed.
+gap between packages — is fixed in the criteria before filing.
+
+Then the red-team attempts one package from its block alone, in a fresh
+context that is given the block and nothing else — no PRD, no ADR, no
+plan file, no issue tree. It must report anything it had to look up
+outside the block as a gap. Every gap is closed in the block before
+filing: the missing fact is written into the block, not linked from it,
+and a block with an open gap is not filed. Report what the red-team
+found and what changed.
 
 ## Output
 
@@ -93,3 +104,13 @@ what the red-team found and what changed.
 - Search existing issues before creating any (`gh issue list --search`). Update a match rather than opening a duplicate.
 - No due dates, no milestones, no estimates in hours. Sizes are for sequencing and for matching a package to available energy, nothing else.
 - State the total package count and wave count up front. If the plan exceeds about fifteen packages, stop and propose a narrower first slice instead.
+
+## The planning context ends here
+
+Filing the issues is the last act of this context (ADR 0021: the context
+that plans never dispatches). After filing, report the package count and
+the wave count, and end. Do not dispatch, and do not implement a package
+yourself — not even a small one to get the wave started. Dispatch is a
+separate `maya-fleet` invocation in a fresh context, working from the
+filed issues alone; a planning context that finds itself about to start
+one stops and reports it, as an agent stops on an ambiguous criterion.

@@ -21,6 +21,8 @@ Nygard-style ADR. Do not add sections.
 
 - Status: accepted            # proposed | accepted | superseded by NNNN
 - Date: YYYY-MM-DD
+- Implementation: <story number, or none — in force on acceptance>
+- Binds: <skills, layers or levels this constrains; "all" only when it genuinely constrains every one>
 
 ## Context
 
@@ -67,3 +69,5 @@ Every claim carries a source. A citation is author, year, and where in the work 
 - Never write a decision for something still open. Open questions go in `docs/STATE.md`.
 - Do not soften a consequence because it is inconvenient. The file exists so a future maintainer can tell whether the decision still holds.
 - Anything intended to be readable by an academic collaborator is written to that standard the first time: precise claims, real citations, no hedging filler.
+- An ADR is read alone. Context names the problem without requiring another ADR to be open, and other ADRs are cited by number with the relied-on clause quoted, so a reader who has only this file has what it depends on.
+- The recording context ends when the ADR and its story are filed; it does not plan the story's tasks. Planning is a separate `maya-plan` invocation in a fresh context.

@@ -24,7 +24,7 @@ Rounds, in order:
 
 ## Output
 
-`docs/product/prd.md` with those six sections in that order, and `docs/product/non-goals.md` if the non-goals list runs long enough to stand alone.
+`docs/product/prd.md` opens, under its title, with a one-line purpose statement distilled from round 1 and confirmed by the Maintainer before it is written. This is the line other skills recite — `maya-orient` quotes it at the top of every report — so it must read whole on its own. The six sections follow in that order, and `docs/product/non-goals.md` if the non-goals list runs long enough to stand alone.
 
 Every requirement is written as an outcome, never as a technology. "Parsing is incremental" is not a requirement; "a 200-line inscription document re-renders without a visible pause while typing" is.
 
@@ -41,3 +41,4 @@ A `dx-only` item is not condemned. It is simply not product scope, and it does n
 - If a round's answer contradicts the existing spec or an ADR, stop and say so. Do not silently reconcile.
 - If they answer a round with an implementation ("use a streaming parser"), record the underlying need and note the implementation as a candidate, not a requirement.
 - Do not open source files during the interview. What the code does is not evidence of what the product is for.
+- The spec context ends when the PRD is written; it does not plan. Planning is a separate `maya-plan` invocation in a fresh context.

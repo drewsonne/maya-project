@@ -9,6 +9,10 @@ The purpose is to make a merge decision defensible without reading every line. E
 
 So this review is mechanical first and judgement second. The mechanical checks either pass or the PR is not ready, and no amount of reading compensates for one of them failing.
 
+## One pull request per context
+
+A reviewing context reviews exactly one pull request and then ends (ADR 0021). The reviewer carries no prior review's context: it is a fresh agent, not one that has reviewed another PR in the wave and not the author (ADR 0020). Its inputs are the diff, the package block from the hub issue the PR closes (the `Closes drewsonne/maya-project#N` in its description), and the ADR clauses that block's `binds:` field quotes. No other pull request's diff, verdict or findings is read in — a review conditioned on three earlier reviews is a weaker review of the fourth. If you are collecting a wave, dispatch one such agent per PR and consume its verdict; never review the second PR in the context that reviewed the first.
+
 ## Mechanical checks
 
 Run all of these before forming any opinion about the code.

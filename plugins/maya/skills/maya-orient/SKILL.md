@@ -5,7 +5,7 @@ description: Load the current state of the Maya dates project (drewsonne/maya-*)
 
 # Orient on the Maya dates project
 
-Read-only. This skill builds a picture of where the project stands. It does not start work, write code, or create issues.
+Orient runs in a fresh sub-agent context and returns only its report: the invoking context receives the report and nothing else orient read. Read-only, except for the ADR 0019 board reconciliation in step 5. This skill builds a picture of where the project stands. It does not start work, write code, or create issues.
 
 ## 1. Check prerequisites
 
@@ -24,6 +24,7 @@ Identify the hub repo — the one containing `docs/STATE.md`. Check; do not gues
 ## 3. Read the hub
 
 - `docs/STATE.md` — the narrative of where things are.
+- `docs/product/prd.md` — only the purpose line under its title, for the first line of the report. Do not read the rest.
 - `docs/decisions/` — list the newest 5 filenames. Read one only if it bears on an open thread.
 - `docs/roadmap.md`, if present.
 
@@ -36,20 +37,22 @@ Identify the hub repo — the one containing `docs/STATE.md`. Check; do not gues
 
 ## 5. Reconcile the board (ADR 0019)
 
-Compare the Maya Dates board (drewsonne project 2) against actual issue
-and PR state: closed items not at Done, open PRs missing from the board,
-statuses behind reality. Correct each through `scripts/board-status.sh`
-and report what was corrected. A drift you cannot explain is a finding,
-not a silent fix. The board never commands — reconciliation flows
-reality → board only.
+Reconciliation runs in its own fresh context and returns the list of
+corrections, which orient includes in its report. That context compares
+the Maya Dates board (drewsonne project 2) against actual issue and PR
+state: closed items not at Done, open PRs missing from the board,
+statuses behind reality. It corrects each through
+`scripts/board-status.sh` and reports what was corrected. A drift it
+cannot explain is a finding, not a silent fix. The board never commands
+— reconciliation flows reality → board only.
 
 ## 6. Report
 
-Under ~250 words, four sections:
+Under ~250 words. The first line quotes the purpose line of `docs/product/prd.md` verbatim — the one-line statement under its title — or states that the PRD has no purpose line. Then four sections:
 
 **Repo map** — one line each: name, what it does, language, last touched.
 
-**In flight** — open PRs, branches ahead of main, anything at Status=In progress. If nothing is in flight, say so plainly.
+**In flight** — open PRs, branches ahead of main, anything at Status=In progress, and the list of board corrections returned by step 5. If nothing is in flight, say so plainly.
 
 **Blocked or waiting** — issues labelled `blocked`, or STATE.md items waiting on something external.
 
