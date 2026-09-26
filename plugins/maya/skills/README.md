@@ -1,6 +1,6 @@
 # Maya Dates project skills
 
-Eight Claude Skills that manage this project: define the product, capture decisions, prove correctness, plan work, dispatch agents to do it, and review the result (`maya-implement` and `maya-review` complete the set below).
+Eight Claude Skills that manage this project: define the product, capture decisions, prove correctness, plan work, dispatch agents to do it, implement each package under fixed craft rules, and review the result.
 
 Work is tracked per ADR 0009: all issues live on this hub repo as a native
 sub-issue hierarchy — epic (label `epic`) → story (label `story`) → task
@@ -11,33 +11,50 @@ Stories are the unbounded backlog (ADR 0011) — capture future work freely;
 a story that needs breaking down is relabelled `epic` in place, its parts
 becoming new stories beneath it.
 
-Each is a directory containing a `SKILL.md`. Committing this tree to the repo root is all the installation needed — Claude Code discovers `.claude/skills/*/SKILL.md` automatically when run with this repo as the working directory.
+Each is a directory containing a `SKILL.md`. Together they are served as the `maya` plugin from this repo's own marketplace (ADR 0010); see [Installing](#installing) below.
 
 ## The skills
 
 | skill | job | reads | writes |
 |---|---|---|---|
-| `maya-orient` | session entry: repo map, work in flight, blockers, three sized next actions | everything | nothing |
+| `maya-orient` | session entry: repo map, work in flight, blockers, three sized next actions | everything | board corrections (ADR 0019) |
 | `maya-spec` | interviews you into a product definition, one topic per round | — | `docs/product/` |
 | `maya-record` | a settled decision (ADR) or a sourced finding | `docs/decisions/` | `docs/decisions/`, `docs/research/` |
 | `maya-fixtures` | citation-backed correctness vectors; differential testing | `docs/fixtures/` | `docs/fixtures/` |
 | `maya-plan` | spec → non-colliding work packages grouped into waves | `docs/product/`, `docs/decisions/` | `docs/plan/`, issues |
-| `maya-fleet` | preflight gate → dispatch one wave → collect results | `docs/plan/`, `docs/fixtures/` | pull requests |
+| `maya-fleet` | preflight gate → dispatch one wave → collect results | `docs/plan/`, `docs/fixtures/` | pull requests (through its agents), `docs/waves/` |
+| `maya-implement` | the craft rules one dispatched agent works under: fixtures first, one package per context, criteria checklist in the PR from the first commit | its package block, the fixture command, the target repo's fixtures and code | one branch and one draft pull request on the target repo, or a stop report |
+| `maya-review` | one pull request per context: mechanical checks, an adversarial pass, then judgement — one verdict, at most five findings | the PR diff, the package block its `Closes` line names, the ADR clauses that block binds | a verdict and findings on the pull request; a clean PR merged under G2 |
 
 ## How they chain
 
 ```
-maya-spec ──► maya-fixtures ──► maya-plan ──► maya-fleet
-                                                  │
-maya-orient (session start)                       ▼
-maya-record (whenever something settles) ◄── findings, blocked packages
+maya-spec ──► maya-fixtures ──► maya-plan ──► maya-fleet (preflight, dispatch)
+                                                  │  one agent per package
+                                                  ▼
+                                            maya-implement ──► draft pull request
+                                                                      │  one fresh agent per PR
+                                                                      ▼
+                                                                 maya-review
+                                                                      │  verdict + findings
+                                                                      ▼
+                                                        maya-fleet (collect) ──► docs/waves/
+                                                                      │
+maya-orient (session start)                                           │
+maya-record (whenever something settles) ◄────────────────────────────┘ findings, blocked packages
 ```
 
 `maya-fixtures` sits between spec and plan deliberately. `maya-plan` refuses to plan calendar-arithmetic work that no fixture covers, and `maya-fleet` refuses to dispatch against a suite that does not pass. Without fixtures the chain is a locked door — which is the intended behaviour on a project where correctness is the product.
 
+The lower loop is the wave. `maya-fleet` dispatches one agent per package, each working under `maya-implement` and ending when its draft pull request is open or its stop report is filed. At collection, `maya-fleet` fans review out: one fresh `maya-review` agent per pull request, whose verdict and findings the collecting context consumes without reading a diff itself. The fleet context never implements or reviews a package itself, and its wave report is committed to `docs/waves/` before the wave counts as collected.
+
+## One context, one unit of work
+
+Every context does one unit of work, then ends (ADR 0021, proposed): one package per implementing agent, ending at its draft pull request or stop report; one pull request per reviewing agent; one spec round, ADR, plan, wave or orientation per session. The context that plans never dispatches, the one that dispatches never implements, and a coordinator consumes tables and reports rather than doing a package itself. Every handoff is a written artifact sufficient on its own: a package block quoting its story, PRD outcome and binding ADR clauses; a fixed-shape stop report; a PR description carrying its acceptance criteria as a checklist from the first commit. The evidence behind the rule is collected in [`SOURCES.md`](SOURCES.md).
+
 ## Invoking them
 
-Either let Claude trigger a skill from its `description`, or call it by name: `/maya-orient`, `/maya-plan`, and so on.
+Either let Claude trigger a skill from its `description`, or call it by name, namespaced by the plugin: `/maya:maya-orient`, `/maya:maya-plan`, and so on.
 
 ## Conventions they assume
 
@@ -67,8 +84,11 @@ These are enforced by the skills, not suggestions:
 
 ## Installing
 
-**Project-scoped (recommended).** Commit this `.claude/skills/` tree at the repository root. Discovery is automatic; nothing to enable. Versioned alongside the conventions the skills encode, reviewable in a pull request, and available to anyone — or any agent — working in the repo.
+The skills are served as the `maya` plugin from this repo's own marketplace (ADR 0010). Install once, in Claude Code:
 
-**User-scoped.** Copy the skill directories into `~/.claude/skills/` to have them in every session regardless of working directory. Useful for `maya-orient`, less so for the rest, which only make sense inside the repo.
+```
+/plugin marketplace add drewsonne/maya-project
+/plugin install maya@maya-project
+```
 
-Project and user scope are separate from skills saved to a claude.ai account; they do not sync. Pick the repo as the source of truth and avoid keeping edited copies in more than one place.
+Installed users receive a skill change only through a version bump in `plugins/maya/.claude-plugin/plugin.json`: an edit lands here as a commit plus a bump, and CI refuses one without the other. Local copies are not a source — a skill directory copied into a project or home directory, or saved to a claude.ai account, does not update and is not the skill. This repo is the single source of truth.
