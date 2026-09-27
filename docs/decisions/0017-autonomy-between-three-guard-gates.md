@@ -3,6 +3,7 @@
 - Status: accepted
 - Date: 2026-09-20
 - Implementation: #33
+- Amended by: 0023
 
 ## Context
 
