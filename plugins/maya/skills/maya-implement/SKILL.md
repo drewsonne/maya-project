@@ -20,7 +20,7 @@ Never write implementation first.
 1. **Read the package block** — goal, scope, contract, criteria, fixtures. If any acceptance criterion is ambiguous, stop and report it. Do not interpret an ambiguous criterion; an agent that guesses produces something that passes its own reading and fails the real one.
 2. **Run the existing suite.** If it is already failing, stop and report that. Never start work on a red baseline — you will not be able to tell what you broke.
 3. **Write or confirm the failing test first**, from the fixtures named in the package. Watch it fail for the right reason. A test that passes before you have implemented anything is testing nothing.
-4. **Open the draft pull request at the first commit.** Commit the failing test (or, in a package with nothing to test, the first change), push the branch, and open a draft pull request against `main` whose description begins with every acceptance criterion as an unchecked `- [ ]` item, followed by `Closes drewsonne/maya-project#<task>`. Each item is ticked `- [x]` in the commit that satisfies it — update the description as that commit is pushed, not at the end — so the criteria are recited into the working context on every push and the reviewer reads what was claimed against what landed.
+4. **Open the draft pull request at the first commit.** Commit the failing test (or, in a package with nothing to test, the first change), push the branch, and open a draft pull request against `main` whose description opens with a short section headed "For the Maintainer", then every acceptance criterion as an unchecked `- [ ]` item, followed by `Closes drewsonne/maya-project#<task>`. The "For the Maintainer" section sits above the checklist and follows the Writing for the Maintainer rule under "Commits and pull requests"; in two to four sentences it says what the PR changes and exactly what the Maintainer is asked to do (for example "take out of draft and merge", "decide X", or "nothing yet, still in progress"). Each item is ticked `- [x]` in the commit that satisfies it — update the description as that commit is pushed, not at the end — so the criteria are recited into the working context on every push and the reviewer reads what was claimed against what landed.
 5. **Implement the smallest change that makes it pass.**
 6. **Run the full suite**, not just your test.
 7. **Re-read the acceptance criteria** and check each one explicitly, by name. Every item in the pull request checklist is either ticked by a commit that satisfies it or named in the stop report.
@@ -60,6 +60,15 @@ The tooling lines below apply only to repos that use them: confirm against the t
 - Reference the package id and issue number in the body. Issues live on the hub (ADR 0009): from a satellite repo, close the task with the full cross-repo form `Closes drewsonne/maya-project#N` — a bare `Closes #N` there closes nothing.
 - Open a **draft** pull request. Never merge, never push to `main`.
 - The PR description states: the package id, which acceptance criteria are met, which fixtures now pass, and anything you were blocked on. Do not describe the diff — it is visible. The acceptance-criteria checklist opened in step 4 is how "which criteria are met" is stated; keep it current rather than restating it in prose.
+- The PR description opens with the "For the Maintainer" section from step 4, above the acceptance-criteria checklist and written to the rule below. The checklist and the `Closes` line follow it unchanged.
+
+**Writing for the Maintainer.** Write text the Maintainer reads (a report, a verdict comment, a wave report, a pull request description, `docs/STATE.md`) in plain language:
+- Put what the Maintainer needs to know or do first.
+- Use short sentences, one idea each, and everyday words.
+- Say what each issue or PR is, not only its number: "fixtures #16 (rollover vectors)", not "#16".
+- The first time an ADR, gate or label appears, explain it in a few words: "ADR 0017 (when agents may merge)", not "ADR 0017" or "G2".
+- Use a list or a table for three or more items.
+- Leave out process detail the Maintainer does not need in order to act.
 
 ## Stop report
 

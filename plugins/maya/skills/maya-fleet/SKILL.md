@@ -62,6 +62,16 @@ One table, not one report per package:
 
 `outcome` is one of `ok | blocked | failed`: `ok` when the review agent reports fixtures green, scope clean and every criterion met; `blocked` when the agent stopped with a stop report; `failed` for anything else.
 
+The wave report in `docs/waves/` and the collect summary given to the Maintainer follow the Writing for the Maintainer rule below. The collect table keeps the columns and `outcome` values above. The pull request that commits a wave report opens with a short section headed "For the Maintainer", which lists each PR the Maintainer must act on, with what that PR is and the action asked for.
+
+**Writing for the Maintainer.** Write text the Maintainer reads (a report, a verdict comment, a wave report, a pull request description, `docs/STATE.md`) in plain language:
+- Put what the Maintainer needs to know or do first.
+- Use short sentences, one idea each, and everyday words.
+- Say what each issue or PR is, not only its number: "fixtures #16 (rollover vectors)", not "#16".
+- The first time an ADR, gate or label appears, explain it in a few words: "ADR 0017 (when agents may merge)", not "ADR 0017" or "G2".
+- Use a list or a table for three or more items.
+- Leave out process detail the Maintainer does not need in order to act.
+
 For each PR, the collecting context dispatches one fresh review agent running `maya-review` — one pull request per reviewing context, never an agent that has already reviewed another PR in the wave and never the author (ADR 0020, 0021). The review agent runs the fixture suite against the branch, checks each acceptance criterion by name, and diffs the changed paths against the declared scope; it flags any package that touched a fixture file, and that package is `failed` regardless of whether tests pass. The collecting context consumes the review agent's verdict, findings and per-criterion results, and never reads a diff or runs the suite itself.
 
 An agent that stopped with a stop report gets outcome `blocked`, its stop report recorded verbatim under `notes`, and is not retried in place: the question it raised goes back to planning or to `maya-record`, not to a second agent in the same run.

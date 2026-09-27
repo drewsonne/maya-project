@@ -59,10 +59,20 @@ Under ~250 words. The first line quotes the purpose line of `docs/product/prd.md
 
 **Three things you could do next** — each with a size (XS/S/M/L), the repo it lives in, and one sentence on why it is worth doing now. Order by leverage, not by age. Include at least one XS or S option.
 
+The report follows the Writing for the Maintainer rule below.
+
+**Writing for the Maintainer.** Write text the Maintainer reads (a report, a verdict comment, a wave report, a pull request description, `docs/STATE.md`) in plain language:
+- Put what the Maintainer needs to know or do first.
+- Use short sentences, one idea each, and everyday words.
+- Say what each issue or PR is, not only its number: "fixtures #16 (rollover vectors)", not "#16".
+- The first time an ADR, gate or label appears, explain it in a few words: "ADR 0017 (when agents may merge)", not "ADR 0017" or "G2".
+- Use a list or a table for three or more items.
+- Leave out process detail the Maintainer does not need in order to act.
+
 ## Rules
 
 - Report findings; do not infer progress from absence of evidence. "No commits in six weeks" is a fact. "The project has stalled" is a judgement — leave it out.
-- If STATE.md is older than the newest commit, say the state file is stale and offer to regenerate it. Do not regenerate unprompted.
+- If STATE.md is older than the newest commit, say the state file is stale and offer to regenerate it. Do not regenerate unprompted. A regenerated STATE.md follows the Writing for the Maintainer rule in section 6.
 - Do not list every open issue. Past ~8, give the count and surface only what bears on the next actions.
 - Do not open the calculator's source to explain what it does. Repo descriptions and STATE.md are enough for orientation.
 - `correctness` work — wrong calendar maths — outranks features and chores when ordering next actions.

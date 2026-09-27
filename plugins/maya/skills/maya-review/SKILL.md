@@ -61,6 +61,16 @@ One verdict, chosen explicitly: **merge**, **merge after named changes**, or **r
 
 Then at most five findings, most serious first, each naming the file and line. Do not pad the list to look thorough — a review with one real finding and a merge verdict is a good review.
 
+The verdict and findings follow the Writing for the Maintainer rule below wherever the Maintainer reads them: in the review output, in any verdict comment on the pull request, and in the comment that queues a pull request for the Maintainer.
+
+**Writing for the Maintainer.** Write text the Maintainer reads (a report, a verdict comment, a wave report, a pull request description, `docs/STATE.md`) in plain language:
+- Put what the Maintainer needs to know or do first.
+- Use short sentences, one idea each, and everyday words.
+- Say what each issue or PR is, not only its number: "fixtures #16 (rollover vectors)", not "#16".
+- The first time an ADR, gate or label appears, explain it in a few words: "ADR 0017 (when agents may merge)", not "ADR 0017" or "G2".
+- Use a list or a table for three or more items.
+- Leave out process detail the Maintainer does not need in order to act.
+
 ## Rules
 
 - **Author ≠ reviewer, always** (ADR 0020): whoever authored the change — agent or session — never runs its review. If you authored it, dispatch a fresh agent to review and relay its verdict.
