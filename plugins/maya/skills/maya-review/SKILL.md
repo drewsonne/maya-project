@@ -64,7 +64,7 @@ Then at most five findings, most serious first, each naming the file and line. D
 ## Rules
 
 - **Author ≠ reviewer, always** (ADR 0020): whoever authored the change — agent or session — never runs its review. If you authored it, dispatch a fresh agent to review and relay its verdict.
-- Merge only the clean case, and only under an active G2 authorization (ADR 0017): verdict **merge**, zero findings, full suite green, scope clean, no fixture edits. Everything else: state the verdict and queue it for the Maintainer. Never soften a finding to reach the clean case, and never merge a release PR — shipping is G3, always the Maintainer's.
+- Merge only the clean case, and only under an active G2 authorization (ADR 0017): verdict **merge**, zero findings, full suite green, scope clean, no fixture edits. Everything else: state the verdict and queue it for the Maintainer: assign the pull request to the Maintainer (`gh pr edit <n> --repo <owner/repo> --add-assignee <login>`, where `<login>` is the owner of the hub repo) and post the review verdict and findings as a comment on it. Never soften a finding to reach the clean case, and never merge a release PR — shipping is G3, always the Maintainer's.
 - Never approve a PR whose package block cannot be found. Unattributed work has no criteria to check against.
 - Do not comment on formatting, naming preference or style that a linter should own. If a linter should own it and does not, that is one finding: add the linter.
 - A PR that is correct but unreviewable is not ready. Say that, rather than merging it because the tests are green.

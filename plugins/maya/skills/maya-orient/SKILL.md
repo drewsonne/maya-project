@@ -33,6 +33,7 @@ Identify the hub repo — the one containing `docs/STATE.md`. Check; do not gues
 - Open issues per repo: `gh issue list --repo drewsonne/<name> --state open --json number,title,labels,updatedAt`
 - Hierarchy, per ADR 0009: epics on the hub (`gh issue list --repo <hub> --label epic`), each with its story/task rollup — report in-flight work grouped by epic where the hierarchy exists.
 - Board, if the scope allows: `gh project list --owner drewsonne`, then `gh project item-list <n> --owner drewsonne --format json`
+- Waiting on the Maintainer: open PRs assigned to the Maintainer across the maya repos, `gh search prs --owner drewsonne --assignee <login> --state open --json repository,number,title,url --jq '[.[] | select(.repository.name | startswith("maya"))]'`, where `<login>` is the owner of the hub repo. `gh search` sends one GraphQL introspection call before its REST search; if the GraphQL budget is spent, run the same search on REST alone: `gh api -X GET search/issues -f q='is:pr is:open user:drewsonne assignee:<login>' --jq '[.items[] | select(.repository_url | test("/maya[^/]*$")) | {number, title, html_url}]'`.
 - Recent activity: `git log --oneline -10` for a local clone, otherwise `gh api repos/drewsonne/<name>/commits --jq '.[0:10] | .[] | .commit.message'`
 
 ## 5. Reconcile the board (ADR 0019)
@@ -54,7 +55,7 @@ Under ~250 words. The first line quotes the purpose line of `docs/product/prd.md
 
 **In flight** — open PRs, branches ahead of main, anything at Status=In progress, and the list of board corrections returned by step 5. If nothing is in flight, say so plainly.
 
-**Blocked or waiting** — issues labelled `blocked`, or STATE.md items waiting on something external.
+**Blocked or waiting** — issues labelled `blocked`, STATE.md items waiting on something external, and every PR from the step 4 assignee query, each reported as waiting on the Maintainer.
 
 **Three things you could do next** — each with a size (XS/S/M/L), the repo it lives in, and one sentence on why it is worth doing now. Order by leverage, not by age. Include at least one XS or S option.
 
