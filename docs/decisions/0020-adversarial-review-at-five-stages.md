@@ -4,6 +4,7 @@
 - Date: 2026-09-20
 - Implementation: #39
 - Depends on: 0017
+- Amended by: 0023
 
 ## Context
 
