@@ -1,7 +1,7 @@
 # Design: `maya-retro`, a periodic look at what is working
 
-Date: 2026-09-27. Status: design, agreed with the Maintainer section by
-section in one session; awaiting the Maintainer's review of this file.
+Date: 2026-09-27. Status: approved by the Maintainer on 2026-09-27, after
+agreeing it section by section in one session.
 Nothing here is in force until ADR 0024 (below) is accepted and the
 story that implements it is done.
 
@@ -15,9 +15,8 @@ then asks you only product, strategy and vision questions. It fixes
 process problems itself by filing stories it may authorize, within a
 guard you set once through ADR 0024.
 
-Your action: read this file and say whether it is right. If it is, the
-next step is an implementation plan (`maya-plan`) and the ADR draft
-(`maya-record`).
+Your action: merge to keep the design on `main`. The decision itself is
+ADR 0024 (PR #77); the work is story #76.
 
 ## What the Maintainer asked for
 
@@ -179,6 +178,11 @@ reports are the retros' history.
 
 ## 7. ADR 0024: a retro may authorize process fixes
 
+ADR 0024 as drafted (PR #77) governs where it differs from this section:
+its critique added limits — only new stories, only when a retro was due,
+none if the Maintainer says process share is too high, a list shown before
+the session ends, and the guard re-checked by `maya-plan` and `maya-review`.
+
 Drafted through `maya-record` with its devil's-advocate critique; it
 changes the gates, so only the Maintainer accepts it. It amends ADR 0023
 if 0023 is accepted, otherwise ADR 0017.
@@ -246,9 +250,8 @@ if 0023 is accepted, otherwise ADR 0017.
 
 ## Risks
 
-- **The fixer feeds itself.** Process work is already 22 of 32 hub
-  commits since 2026-09-13; a machine that authorizes its own process
-  stories could raise that. The cap, the pattern-only rule and the
+- **The fixer feeds itself.** A machine that authorizes its own process
+  stories could raise the share of effort going to process. The cap, the pattern-only rule and the
   balance question each push back; the balance question puts it in front
   of the Maintainer every time.
 - **Self-praise.** The retro judges the process that runs it. The
