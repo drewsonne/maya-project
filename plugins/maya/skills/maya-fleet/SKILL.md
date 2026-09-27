@@ -33,6 +33,12 @@ On full pass: move the wave's task issues to **Ready** on the board (`scripts/bo
 
 This is what the Workflow tool is for: one agent per package, the wave in parallel. Dispatch requires an active G2 authorization (ADR 0017): the wave's story carries the `authorized` label, applied by the Maintainer. The label covers every wave of that story, sequentially; its absence means stop and ask. Never infer authorization from a different story or an earlier session.
 
+A story whose body has a line beginning `Authorized by retro ` was authorized by a `maya-retro` retro under ADR 0024 (a retro may authorize process fixes), not by the Maintainer directly. When the ADR 0024 acceptance check below exits 0, it counts as carrying the `authorized` label applied by the Maintainer, because ADR 0024 amends G2 for these stories; when it does not exit 0, treat it as not authorized and stop.
+
+```
+f=$(gh api 'repos/drewsonne/maya-project/contents/docs/decisions?ref=main' --jq '[.[].name | select(startswith("0024-"))][0] // empty') && test -n "$f" && gh api -H 'Accept: application/vnd.github.raw' "repos/drewsonne/maya-project/contents/docs/decisions/$f?ref=main" | grep -qx -- '- Status: accepted'
+```
+
 Each agent receives only its package block, the maya-implement skill text, its path scope, the command that runs the fixtures, and the instruction to open a draft pull request and stop.
 
 Assemble every agent prompt in this order, without exception: the hard rules below first, the maya-implement skill text next, the package block last. The package block goes last because the acceptance criteria are then the most recent thing in the agent's context when it starts work, and the most recent thing in context is what an agent actually follows.

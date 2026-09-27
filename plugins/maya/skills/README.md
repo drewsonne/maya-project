@@ -1,6 +1,6 @@
 # Maya Dates project skills
 
-Eight Claude Skills that manage this project: define the product, capture decisions, prove correctness, plan work, dispatch agents to do it, implement each package under fixed craft rules, and review the result.
+Nine Claude Skills that manage this project: define the product, capture decisions, prove correctness, plan work, dispatch agents to do it, implement each package under fixed craft rules, review the result, and look back at how it went.
 
 Work is tracked per ADR 0009: all issues live on this hub repo as a native
 sub-issue hierarchy — epic (label `epic`) → story (label `story`) → task
@@ -25,6 +25,7 @@ Each is a directory containing a `SKILL.md`. Together they are served as the `ma
 | `maya-fleet` | preflight gate → dispatch one wave → collect results | `docs/plan/`, `docs/fixtures/` | pull requests (through its agents), `docs/waves/` |
 | `maya-implement` | the craft rules one dispatched agent works under: fixtures first, one package per context, criteria checklist in the PR from the first commit | its package block, the fixture command, the target repo's fixtures and code | one branch and one draft pull request on the target repo, or a stop report |
 | `maya-review` | one pull request per context: mechanical checks, an adversarial pass, then judgement — one verdict, at most five findings | the PR diff, the package block its `Closes` line names, the ADR clauses that block binds | a verdict and findings on the pull request; a clean PR merged under G2 |
+| `maya-retro` | a retro run live with the Maintainer when orient says one is due: process and product scorecards compared with the last retro, product-only questions, process stories filed (authorized only under ADR 0024) | `docs/waves/`, `docs/retros/`, pull requests and verdicts, the fixture dataset | `docs/retros/`, stories labelled `retro` |
 
 ## How they chain
 
@@ -42,6 +43,7 @@ maya-spec ──► maya-fixtures ──► maya-plan ──► maya-fleet (pref
                                                                       │
 maya-orient (session start)                                           │
 maya-record (whenever something settles) ◄────────────────────────────┘ findings, blocked packages
+maya-retro (when orient says a retro is due) ──► docs/retros/, process stories ──► maya-plan
 ```
 
 `maya-fixtures` sits between spec and plan deliberately. `maya-plan` refuses to plan calendar-arithmetic work that no fixture covers, and `maya-fleet` refuses to dispatch against a suite that does not pass. Without fixtures the chain is a locked door — which is the intended behaviour on a project where correctness is the product.
@@ -67,6 +69,7 @@ docs/
   research/     <topic>.md            (sourced findings, citations required)
   fixtures/     *.yaml                (test vectors, citations required)
   plan/         <slug>.md             (waves and work packages)
+  retros/       YYYY-MM-DD.md         (retro reports; the newest is the next retro's baseline)
   STATE.md      where things stand; open questions
 ```
 
