@@ -21,7 +21,7 @@ Every check must pass.
 4. Every `depends_on` points at a package in an earlier, completed wave.
 5. `main` is green: the full suite passes on a clean checkout.
 6. The fixture suite exists, covers every behaviour the wave touches, and passes.
-7. Open pull requests on the target repo are either resolved or explicitly deferred with a note in the plan. A stale backlog means every agent branch conflicts.
+7. Open pull requests on the target repo are either resolved or explicitly deferred with a note in the plan. A stale backlog means every agent branch conflicts. An open pull request outside a wave (as defined in maya-review) still counts as open: a reviewed one passes this check only if the plan's deferral note names it, and an unreviewed one is neither resolved nor deferred; the smallest action that clears it is a maya-review sweep in a fresh context.
 8. Every package's task issue is a sub-issue of an open story on the hub (ADR 0009). An orphan task is a planning defect — route it back to `maya-plan`.
 9. If the wave was planned before this session, re-validate each package against current `main` (scope paths still exist, contract still true, fixtures still cover it). A stale package is re-planned, not dispatched.
 
