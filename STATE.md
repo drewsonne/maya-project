@@ -8,7 +8,7 @@ fixture dataset itself lives in `maya-date-fixtures` (ADR 0006).
 
 ## Status
 
-Architecture partly ratified, product specified, work planned; no fixtures written yet.
+Architecture partly ratified, product specified, work planned; wave-1 schema gate live; ten wave-2 fixture files reviewed and queued for merge (2026-09-27).
 
 - ADRs 0001, 0002 and 0006 are `accepted` (2026-09-13). 0001 was amended during
   acceptance: layer 2 is `@drewsonne/maya-date-operations`, not
@@ -32,7 +32,17 @@ Repository facts are re-verified rather than carried forward — see
    the closed bumps. `maya-calculator` and `maya-dates` are clear.
 4. ~~Start wave 1~~ Done 2026-09-20: `wave-1-schema-ci` merged
    (maya-date-fixtures#10), task #1 and story #11 closed, epic #10 at 1/4.
-   Next wave of work: the six wave-2 fixture issues (#2–#7, story #12).
+5. ~~Wave 2~~ Dispatched 2026-09-21, collected 2026-09-27
+   (`docs/waves/wave-2.md`): six PRs maya-date-fixtures#16–#21 reviewed one
+   fresh context each, every value recomputed and every citation re-fetched;
+   named changes applied and re-checked. All six are **queued for the
+   Maintainer to un-draft and merge** — the harness blocks `gh pr ready`.
+   Merging closes tasks #2–#7; then close story #12 on demonstrated
+   acceptance. The gap analysis makes a schema-v2 package the first item of
+   the next wave, before `wave-3-js-harness` can execute the notes-only
+   files (distance numbers, candidate sets, rejection, lenient input,
+   Julian dates). Ten decisions nobody made are listed in the wave report
+   for `maya-record`.
 
 ## Open questions
 
