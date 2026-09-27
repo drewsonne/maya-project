@@ -116,3 +116,22 @@ A *pull request outside a wave* is an open pull request on a non-archived `drews
 - Do not comment on formatting, naming preference or style that a linter should own. If a linter should own it and does not, that is one finding: add the linter.
 - A PR that is correct but unreviewable is not ready. Say that, rather than merging it because the tests are green.
 - If reviewing reveals the plan was wrong rather than the code, say so and route it back to `maya-plan`. Do not fix a planning error by negotiating with the implementation.
+
+## Retro stories (ADR 0024)
+
+Find the story the pull request's task belongs to: `gh api repos/drewsonne/maya-project/issues/<task>/parent --jq .number`, where `<task>` is the number in the pull request's `Closes drewsonne/maya-project#<task>` line. If that story's body (`gh issue view <story> --repo drewsonne/maya-project --json body --jq .body`) has a line beginning `Authorized by retro `, a `maya-retro` retro authorized it under ADR 0024 (a retro may authorize process fixes), and the review checks the diff against the guard below. A pull request that touches anything on it, or where it is in doubt, crosses the guard: that is a finding naming the guard item, no agent merges the pull request whatever its verdict, and it is queued for the Maintainer as the Rules above set out. Such a story counts as an active G2 authorization only while the ADR 0024 acceptance check below exits 0. If the story cannot be found, or either command fails, treat the pull request as crossing the guard.
+
+```
+f=$(gh api 'repos/drewsonne/maya-project/contents/docs/decisions?ref=main' --jq '[.[].name | select(startswith("0024-"))][0] // empty') && test -n "$f" && gh api -H 'Accept: application/vnd.github.raw' "repos/drewsonne/maya-project/contents/docs/decisions/$f?ref=main" | grep -qx -- '- Status: accepted'
+```
+
+**The ADR 0024 guard.** A retro never authorizes a story that touches any of these, in either direction, loosening or tightening:
+1. a gate: G1 (decide), G2 (authorize), G3 (ship), or the list of moments at which the Maintainer is asked;
+2. an agent permission;
+3. what an agent may merge, or what counts as a clean review verdict;
+4. authorization: who or what may apply or remove the `authorized` label, and when;
+5. review integrity or fixture integrity, including author ≠ reviewer, adversarial review (ADR 0020) and the rule that no agent edits a fixture or expected value;
+6. a product or domain convention, for example the correlation constant or Haab numbering;
+7. citation rules;
+8. the retro's own powers: its guard, its cap, its limits, or anything in `maya-retro` about authorizing.
+Nor does a retro authorize a story that changes product scope, or that needs any ADR other than a process ADR. A process ADR changes only how agents work and touches nothing in items 1 to 8 (ADR 0023); if ADR 0023 was rejected, no ADR counts as a process ADR. A story that crosses the guard is still filed, without `authorized`. Doubt means without.

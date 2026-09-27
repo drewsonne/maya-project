@@ -92,6 +92,21 @@ filing: the missing fact is written into the block, not linked from it,
 and a block with an open gap is not filed. Report what the red-team
 found and what changed.
 
+## Retro stories (ADR 0024)
+
+A story whose body has a line beginning `Authorized by retro ` carries `authorized` because a `maya-retro` retro applied it under ADR 0024 (a retro may authorize process fixes), not the Maintainer directly. Before filing any package for such a story, check the package against the guard below. A package that touches anything on it, or where it is in doubt, crosses the guard. Then file no package for the story; remove `authorized` from it (`gh issue edit <n> --repo drewsonne/maya-project --remove-label authorized`); assign it to the Maintainer (`gh issue edit <n> --repo drewsonne/maya-project --add-assignee <login>`, where `<login>` is the owner of the hub repo); comment on it naming the package and the guard item crossed, in plain words; and list the package in the plan document under the heading "Stopped at the ADR 0024 guard".
+
+**The ADR 0024 guard.** A retro never authorizes a story that touches any of these, in either direction, loosening or tightening:
+1. a gate: G1 (decide), G2 (authorize), G3 (ship), or the list of moments at which the Maintainer is asked;
+2. an agent permission;
+3. what an agent may merge, or what counts as a clean review verdict;
+4. authorization: who or what may apply or remove the `authorized` label, and when;
+5. review integrity or fixture integrity, including author ≠ reviewer, adversarial review (ADR 0020) and the rule that no agent edits a fixture or expected value;
+6. a product or domain convention, for example the correlation constant or Haab numbering;
+7. citation rules;
+8. the retro's own powers: its guard, its cap, its limits, or anything in `maya-retro` about authorizing.
+Nor does a retro authorize a story that changes product scope, or that needs any ADR other than a process ADR. A process ADR changes only how agents work and touches nothing in items 1 to 8 (ADR 0023); if ADR 0023 was rejected, no ADR counts as a process ADR. A story that crosses the guard is still filed, without `authorized`. Doubt means without.
+
 ## Output
 
 - `docs/plan/<slug>.md` — the waves, packages in full, and the conflict check.

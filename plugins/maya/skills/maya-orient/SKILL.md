@@ -60,6 +60,12 @@ Under ~250 words. The first line quotes the purpose line of `docs/product/prd.md
 
 **Three things you could do next** — each with a size (XS/S/M/L), the repo it lives in, and one sentence on why it is worth doing now. Order by leverage, not by age. Include at least one XS or S option. When at least one pull request outside a wave is not yet reviewed, one of the three is a maya-review sweep of them, size S for up to five pull requests and M for more.
 
+**Retro due.** When a retro is due, one of the three next actions is "Run a retro (`maya-retro`)", sized S, in the hub repo. A retro is due when either holds: three or more waves have been collected since the last retro; or fourteen or more days have passed since the last retro and at least one wave was collected in that time. The last retro is the newest `docs/retros/YYYY-MM-DD.md` on `main`; with none, the period starts 2026-09-13, the PRD interview. A wave counts as collected on the date its report in `docs/waves/` was first committed to `main`. The command below, run from the root of a hub clone, prints the figures and exits 0 exactly when a retro is due; if it prints nothing on stdout (outside a hub clone, or the fetch failed), say the check was skipped. The fetch only updates remote-tracking refs, so orient stays read-only. Orient reports that a retro is due; it never runs one.
+
+```
+git remote get-url origin | grep -qE '[:/]drewsonne/maya-project(\.git)?$' && git fetch -q origin main && { last=$(git ls-tree --name-only origin/main docs/retros/ | sed 's#^docs/retros/##' | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.md$' | sort | tail -1 | cut -c1-10); last=${last:-2026-09-13}; waves=0; for w in $(git ls-tree --name-only origin/main docs/waves/); do d=$(git log origin/main --diff-filter=A --format=%cs -- "$w" | tail -1); [[ "$d" > "$last" ]] && waves=$((waves+1)); done; days=$(( ( $(date -u +%s) - $(date -u -j -f %Y-%m-%d "$last" +%s 2>/dev/null || date -u -d "$last" +%s) ) / 86400 )); echo "last=$last waves=$waves days=$days"; [ "$waves" -ge 3 ] || { [ "$days" -ge 14 ] && [ "$waves" -ge 1 ]; }; }
+```
+
 The report follows the Writing for the Maintainer rule below.
 
 **Writing for the Maintainer.** Write text the Maintainer reads (a report, a verdict comment, a wave report, a pull request description, `docs/STATE.md`) in plain language:
